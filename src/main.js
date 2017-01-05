@@ -1,4 +1,4 @@
-const game = new Phaser.Game(window.innerWidth, window.innerHeight, Phaser.AUTO, 'webinator-repo-game');
+const game = new Phaser.Game(800, 600, Phaser.AUTO, 'webinator-repo-game', null, false, false);
 
 game.state.add('boot', require('./states/boot'));
 game.state.add('game', require('./states/game'));

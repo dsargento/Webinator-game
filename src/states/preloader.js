@@ -5,7 +5,8 @@ function Preloader() {
 
 Preloader.prototype.preload = function() {
     this.asset = this.add.sprite(this.game.width * 0.5 - 110, this.game.height * 0.5 - 10, 'preloader');
-    this.load.spritesheet('spritesheet', 'assets/roguelikeChar_transparent.png', 16, 16, -1, 0, 0);
+    this.load.image("background", "assets/fond.png");
+    this.load.spritesheet('spritesheet', 'assets/roguelikeChar_transparent2.png', 16, 16, -1, 0, 1);
 
     this.load.setPreloadSprite(this.asset);
 
