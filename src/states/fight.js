@@ -6,6 +6,8 @@ Fight.prototype.create = function() {
 
     background.width = 800;
     background.height = 600;
+    p1name = 'rouis';
+    p2name = 'david';
     player1 = this.add.group();
     player2 = this.add.group();
     xpos = this.world.centerX;
@@ -32,8 +34,18 @@ Fight.prototype.create = function() {
       p2life = 100;
       p2block = 10;
     }
-    p1hp = this.add.bitmapText(10, 30, 'carrier_command', 'HP: '  + p1life, 34);
-    p2hp = this.add.bitmapText(500, 30, 'carrier_command', 'HP: ' + p2life, 34);
+    p1_name = this.add.bitmapText(50, 20, 'carrier_command',  p1name, 10);
+    p2_name = this.add.bitmapText(675, 20, 'carrier_command',  p2name, 10);
+    p1_hp = this.add.bitmapText(50, 40, 'carrier_command', 'HP: '  + p1life, 10);
+    p2_hp = this.add.bitmapText(675, 40, 'carrier_command', 'HP: ' + p2life, 10);
+    p1_armor = this.add.bitmapText(50, 60, 'carrier_command', 'Armor: ' + p1armor, 10);
+    p2_armor = this.add.bitmapText(675, 60, 'carrier_command', 'Armor: ' + p2armor, 10);
+    p1_attack = this.add.bitmapText(50, 80, 'carrier_command', 'Attack: ' + p1attack, 10);
+    p2_attack = this.add.bitmapText(675, 80, 'carrier_command', 'Attack: ' + p2attack, 10);
+    p1_init = this.add.bitmapText(50, 100, 'carrier_command', 'Init: ' + p1init, 10);
+    p2_init = this.add.bitmapText(675, 100, 'carrier_command', 'Init: ' + p2init, 10);
+
+
     FightTurn = 0;
     this.CheckPlayersInit();
 };
@@ -78,8 +90,8 @@ Fight.prototype.CheckPlayersAreAlive = function() {
     player2Alive = false;
     p2life = 0;
   }
-  p1hp.setText('HP: ' + p1life);
-  p2hp.setText('HP: ' + p2life);
+  p1_hp.setText('HP: ' + p1life);
+  p2_hp.setText('HP: ' + p2life);
 };
 
 
