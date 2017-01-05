@@ -183,7 +183,13 @@ Fight.prototype.animattack = function(from, to) {
     }, 1000, Phaser.Easing.Linear.None);
     tween1.chain(tween2);
     tween2.chain(tween3);
+    tween3.onComplete.add(doSomething, this);
+
+    function doSomething() {
+        return(1);
+    }
     tween1.start();
+
 };
 
 
