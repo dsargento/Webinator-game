@@ -2,6 +2,8 @@ function Game() {}
 
 Game.prototype.create = function() {
     background = this.add.image(0, 0, "background");
+    p1hp = this.add.bitmapText(10, 30, 'carrier_command', 'HP: 100', 34);
+    p2hp = this.add.bitmapText(500, 30, 'carrier_command', 'HP: 100', 34);
     background.width = 800;
     background.height = 600;
     player1 = this.add.group();
@@ -11,40 +13,14 @@ Game.prototype.create = function() {
     this.input.onDown.add(this.onInputDown, this);
     this.createP1();
     this.createP2();
-
-    // just a property we can tween so the bar has a progress to show
-    barProgress = 128;
-
-    // the bar itself
-    bar = this.add.bitmapData(128, 8);
-
-    this.add.sprite(this.world.centerX - (bar.width * 0.5), this.world.centerY, bar);
-
-
 };
 
 Game.prototype.update = function() {
-    bar.context.clearRect(0, 0, bar.width, bar.height);
 
-    // some simple colour changing to make it look like a health bar
-    if (barProgress < 32) {
-        bar.context.fillStyle = '#f00';
-    } else if (barProgress < 64) {
-        bar.context.fillStyle = '#ff0';
-    } else {
-        bar.context.fillStyle = '#0f0';
-    }
-
-    // draw the bar
-    bar.context.fillRect(0, 0, barProgress, 8);
-
-    // important - without this line, the context will never be updated on the GPU when using webGL
-    bar.dirty = true;
 };
 
 Game.prototype.onInputDown = function() {
-    // this.game.state.start('gameover');
-    // p1body.frame += 1;
+
 };
 
 Game.prototype.createP1 = function() {
@@ -90,5 +66,10 @@ Game.prototype.createP2 = function() {
     player2.add(p2hair);
     player2.add(p2weapon);
 };
+
+Game.prototype.animattackp1 = function() {
+
+};
+
 
 module.exports = Game;
