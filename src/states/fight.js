@@ -1,7 +1,7 @@
-function Game() {}
+function Fight() {}
 
-Game.prototype.create = function() {
-    console.log('Game');
+Fight.prototype.create = function() {
+    console.log('Fight');
     background = this.add.image(0, 0, "background");
 
     background.width = 800;
@@ -34,41 +34,41 @@ Game.prototype.create = function() {
     }
     p1hp = this.add.bitmapText(10, 30, 'carrier_command', 'HP: '  + p1life, 34);
     p2hp = this.add.bitmapText(500, 30, 'carrier_command', 'HP: ' + p2life, 34);
-    GameTurn = 0;
+    FightTurn = 0;
     this.CheckPlayersInit();
 };
 
-Game.prototype.update = function() {
+Fight.prototype.update = function() {
   if((player1Alive == true) && (player2Alive == true))
   {
-    if(GameTurn == 0)
+    if(FightTurn == 0)
     {
       this.Player1Turn();
-      GameTurn = 1;
+      FightTurn = 1;
     }
-    else if(GameTurn == 1)
+    else if(FightTurn == 1)
     {
       this.Player2Turn();
-      GameTurn = 0;
+      FightTurn = 0;
     }
     this.CheckPlayersAreAlive();
   }
 };
 
-Game.prototype.Player1Turn = function() {
+Fight.prototype.Player1Turn = function() {
   //CheckWeapon();
   newlife = this.Attack(p2life, p2armor, p2avoid, p1attack);
   p2life = newlife;
 };
 
 
-Game.prototype.Player2Turn = function() {
+Fight.prototype.Player2Turn = function() {
   //CheckWeapon();
   newlife = this.Attack(p1life, p1armor, p1avoid, p2attack);
   p1life = newlife;
 };
 
-Game.prototype.CheckPlayersAreAlive = function() {
+Fight.prototype.CheckPlayersAreAlive = function() {
   if(p1life <= 0)
   {
     player1Alive = false;
@@ -83,7 +83,7 @@ Game.prototype.CheckPlayersAreAlive = function() {
 };
 
 
-Game.prototype.Attack = function(life, armor, avoid, attack) {
+Fight.prototype.Attack = function(life, armor, avoid, attack) {
   if(life > 0)
   {
     damage = attack - armor;
@@ -97,20 +97,20 @@ Game.prototype.Attack = function(life, armor, avoid, attack) {
 };
 
 
-/*Game.prototype.CheckWeapon = function() {
+/*Fight.prototype.CheckWeapon = function() {
 
 };*/
 
-Game.prototype.CheckPlayersInit = function() {
+Fight.prototype.CheckPlayersInit = function() {
 
   if(p1init > p2init)
   {
-    GameTurn = 0;
+    FightTurn = 0;
 
   }
   else if (p1init  < p2init)
   {
-    GameTurn = 1;
+    FightTurn = 1;
   }
   else if (p1init  ==  p2init)
   {
@@ -118,22 +118,22 @@ Game.prototype.CheckPlayersInit = function() {
     var rand2 = this.rnd.integerInRange(0, 100);
     if(rand1 < rand2)
     {
-      GameTurn = 0;
+      FightTurn = 0;
     }
     else
     {
-      GameTurn = 1;
+      FightTurn = 1;
     }
   }
-  return GameTurn;
+  return FightTurn;
 };
 
 
-Game.prototype.onInputDown = function() {
+Fight.prototype.onInputDown = function() {
 
 };
 
-Game.prototype.createP1 = function() {
+Fight.prototype.createP1 = function() {
     p1x = 20;
     p1y = 600 - 150;
     p1body = this.add.sprite(p1x, p1y, 'spritesheet');
@@ -156,7 +156,7 @@ Game.prototype.createP1 = function() {
     return 0;
 };
 
-Game.prototype.createP2 = function() {
+Fight.prototype.createP2 = function() {
     p2x = 800 - 20;
     p2y = 600 - 150;
     p2body = this.add.sprite(p2x, p2y, 'spritesheet');
@@ -179,9 +179,9 @@ Game.prototype.createP2 = function() {
     return 0;
 };
 
-Game.prototype.animattackp1 = function() {
+Fight.prototype.animattackp1 = function() {
 
 };
 
 
-module.exports = Game;
+module.exports = Fight;
