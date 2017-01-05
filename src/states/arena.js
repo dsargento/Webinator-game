@@ -1,7 +1,7 @@
-function Game() {}
+function Arena() {}
 
-Game.prototype.create = function() {
-    console.log('Game');
+Arena.prototype.create = function() {
+    console.log('Arena');
     var text = this.add.text(this.game.width * 0.5, this.game.height * 0.5, 'ARENA', {
         font: '42px Arial',
         fill: '#ffffff',
@@ -9,16 +9,16 @@ Game.prototype.create = function() {
     });
     text.anchor.set(0.5);
     this.input.onDown.add(this.onInputDown, this);
-    this.game.state.start('arena');
+    this.game.state.start('fight');
 };
 
-Game.prototype.update = function() {
+Arena.prototype.update = function() {
 
 
 };
 
-Game.prototype.onInputDown = function() {
-    this.game.state.start('arena');
+Arena.prototype.onInputDown = function() {
+    this.game.state.start('fight');
 };
 
-module.exports = Game;
+module.exports = Arena;
