@@ -2,7 +2,6 @@ function Game() {}
 
 Game.prototype.create = function() {
     background = this.add.image(0, 0, "background");
-
     background.width = 800;
     background.height = 600;
     player1 = this.add.group();
@@ -35,6 +34,11 @@ Game.prototype.create = function() {
     this.CheckPlayersInit();
     gameTurn = 0;
 
+    player1.setAll('anchor:x', 0.5);
+    player1.setAll('anchor:y', 0.5);
+    player2.setAll('anchor:x', 0.5);
+    player2.setAll('anchor:y', 0.5);
+    this.animattack(player2, player1);
 };
 
 Game.prototype.update = function() {
@@ -94,12 +98,8 @@ Game.prototype.Attack = function(life, armor, avoid, attack) {
   }
       this.createP1();
     this.createP2();
-    this.animattackp1();
 };
 
-Game.prototype.update = function() {
-
-};
 /*Game.prototype.CheckWeapon = function() {
 
 };*/
@@ -134,53 +134,65 @@ Game.prototype.onInputDown = function() {
 };
 
 Game.prototype.createP1 = function() {
-    p1x = 20;
-    p1y = 600 - 150;
-    p1body = this.add.sprite(p1x, p1y, 'spritesheet');
-    p1weapon = this.add.sprite(p1x, p1y, 'spritesheet');
-    p1pants = this.add.sprite(p1x, p1y, 'spritesheet');
-    p1hair = this.add.sprite(p1x, p1y, 'spritesheet');
-    p1body.frame = 1;
-    p1body.scale.setTo(6);
-    p1weapon.frame = 368;
-    p1weapon.scale.setTo(6);
-    p1pants.frame = 3;
-    p1pants.scale.setTo(6);
-    p1hair.frame = 19;
-    p1hair.scale.setTo(6);
+    this.x = 20;
+    this.y = 600 - 150;
+    this.char = this.add.sprite(this.x, this.y, 'spritesheet');
+    this.weapon = this.add.sprite(this.x, this.y, 'spritesheet');
+    this.pants = this.add.sprite(this.x, this.y, 'spritesheet');
+    this.hair = this.add.sprite(this.x, this.y, 'spritesheet');
+    this.char.frame = 1;
+    this.char.scale.setTo(6);
+    this.weapon.frame = 368;
+    this.weapon.scale.setTo(6);
+    this.pants.frame = 3;
+    this.pants.scale.setTo(6);
+    this.hair.frame = 19;
+    this.hair.scale.setTo(6);
 
-    player1.add(p1body);
-    player1.add(p1pants);
-    player1.add(p1hair);
-    player1.add(p1weapon);
+    player1.add(this.char);
+    player1.add(this.pants);
+    player1.add(this.hair);
+    player1.add(this.weapon);
     return 0;
 };
 
 Game.prototype.createP2 = function() {
-    p2x = 800 - 20;
-    p2y = 600 - 150;
-    p2body = this.add.sprite(p2x, p2y, 'spritesheet');
-    p2weapon = this.add.sprite(p2x, p2y, 'spritesheet');
-    p2pants = this.add.sprite(p2x, p2y, 'spritesheet');
-    p2hair = this.add.sprite(p2x, p2y, 'spritesheet');
-    p2body.frame = 1;
-    p2body.scale.setTo(-6, 6);
-    p2weapon.frame = 51;
-    p2weapon.scale.setTo(-6, 6);
-    p2pants.frame = 57;
-    p2pants.scale.setTo(-6, 6);
-    p2hair.frame = 22;
-    p2hair.scale.setTo(-6, 6);
+    this.x = 800 - 20;
+    this.y = 600 - 150;
+    this.char = this.add.sprite(this.x, this.y, 'spritesheet');
+    this.weapon = this.add.sprite(this.x, this.y, 'spritesheet');
+    this.pants = this.add.sprite(this.x, this.y, 'spritesheet');
+    this.hair = this.add.sprite(this.x, this.y, 'spritesheet');
+    this.char.frame = 1;
+    this.char.scale.setTo(-6, 6);
+    this.weapon.frame = 51;
+    this.weapon.scale.setTo(-6, 6);
+    this.pants.frame = 57;
+    this.pants.scale.setTo(-6, 6);
+    this.hair.frame = 22;
+    this.hair.scale.setTo(-6, 6);
 
-    player2.add(p2body);
-    player2.add(p2pants);
-    player2.add(p2hair);
-    player2.add(p2weapon);
+    player2.add(this.char);
+    player2.add(this.pants);
+    player2.add(this.hair);
+    player2.add(this.weapon);
     return 0;
 };
 
-Game.prototype.animattackp1 = function() {
-  this.add.tween(player1).to( { x: player2.x }, 4000, Phaser.Easing.Bounce.Out, true);
+Game.prototype.animattack = function(from, to) {
+  if (from.children[1].x < to.children[1].x) {
+    side = -1;
+  } else {
+    side = 1;
+  }
+  initialPos = from.children[1].x;
+  console.log(to.children[1]);
+  tween1 =  this.add.tween(from).to( { x: to.children[1].x }, 300  , Phaser.Easing.Linear.None);
+  tween2 = this.add.tween(from.children[3]).to({x: from.children[3].world.x + 5, y: from.children[3].world.y + 5, angle: 10}, 200, Phaser.Easing.Linear.None, false, 0, 0, true);
+  tween3 = this.add.tween(from).to( { x: initialPos}, 1000, Phaser.Easing.Linear.None);
+  tween1.chain(tween2);
+  tween2.chain(tween3);
+  tween1.start();
 };
 
 
