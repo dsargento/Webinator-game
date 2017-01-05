@@ -2,8 +2,7 @@ function Game() {}
 
 Game.prototype.create = function() {
     background = this.add.image(0, 0, "background");
-    p1hp = this.add.bitmapText(10, 30, 'carrier_command', 'HP: 100', 34);
-    p2hp = this.add.bitmapText(500, 30, 'carrier_command', 'HP: 100', 34);
+
     background.width = 800;
     background.height = 600;
     player1 = this.add.group();
@@ -11,7 +10,7 @@ Game.prototype.create = function() {
     xpos = this.world.centerX;
     ypos = this.world.centerY;
     this.input.onDown.add(this.onInputDown, this);
-    if (this.createP1() == true)
+    if (this.createP1() == 0)
     {
       player1Alive = true;
       p1attack = 6;
@@ -21,7 +20,7 @@ Game.prototype.create = function() {
       p1life = 100;
       p1block = 10;
     }
-    if (this.createP2() == true)
+    if (this.createP2() == 0)
     {
       p1init = 20;
       player2Alive = true;
@@ -31,6 +30,8 @@ Game.prototype.create = function() {
       p2life = 100;
       p2block = 10;
     }
+    p1hp = this.add.bitmapText(10, 30, 'carrier_command', 'HP: '  + p1life, 34);
+    p2hp = this.add.bitmapText(500, 30, 'carrier_command', 'HP: ' + p2life, 34);
     this.CheckPlayersInit();
     gameTurn = 0;
 
@@ -151,6 +152,7 @@ Game.prototype.createP1 = function() {
     player1.add(p1pants);
     player1.add(p1hair);
     player1.add(p1weapon);
+    return 0;
 };
 
 Game.prototype.createP2 = function() {
@@ -173,6 +175,7 @@ Game.prototype.createP2 = function() {
     player2.add(p2pants);
     player2.add(p2hair);
     player2.add(p2weapon);
+    return 0;
 };
 
 Game.prototype.animattackp1 = function() {
