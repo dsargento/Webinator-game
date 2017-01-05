@@ -13,26 +13,24 @@ Fight.prototype.create = function() {
     xpos = this.world.centerX;
     ypos = this.world.centerY;
     this.input.onDown.add(this.onInputDown, this);
-    if (this.createP1() == 0)
-    {
-      player1Alive = true;
-      p1attack = 10;
-      p1init = 50;
-      p1avoid = 50;
-      p1armor = 3;
-      p1life = 100;
-      p1block = 10;
+    if (this.createP1() == 0) {
+        player1Alive = true;
+        p1attack = 10;
+        p1init = 50;
+        p1avoid = 50;
+        p1armor = 3;
+        p1life = 100;
+        p1block = 10;
 
     }
-    if (this.createP2() == 0)
-    {
-      p2init = 50;
-      player2Alive = true;
-      p2attack = 10;
-      p2avoid = 20;
-      p2armor = 4;
-      p2life = 100;
-      p2block = 10;
+    if (this.createP2() == 0) {
+        p2init = 50;
+        player2Alive = true;
+        p2attack = 10;
+        p2avoid = 20;
+        p2armor = 4;
+        p2life = 100;
+        p2block = 10;
     }
     p1_name = this.add.bitmapText(50, 20, 'carrier_command',  p1name, 10);
     p2_name = this.add.bitmapText(675, 20, 'carrier_command',  p2name, 10);
@@ -44,40 +42,34 @@ Fight.prototype.create = function() {
     p2_attack = this.add.bitmapText(675, 80, 'carrier_command', 'Attack: ' + p2attack, 10);
     p1_init = this.add.bitmapText(50, 100, 'carrier_command', 'Init: ' + p1init, 10);
     p2_init = this.add.bitmapText(675, 100, 'carrier_command', 'Init: ' + p2init, 10);
-
-
     FightTurn = 0;
     this.CheckPlayersInit();
 };
 
 Fight.prototype.update = function() {
-  if((player1Alive == true) && (player2Alive == true))
-  {
-    if(FightTurn == 0)
-    {
-      this.Player1Turn();
-      FightTurn = 1;
+    if ((player1Alive == true) && (player2Alive == true)) {
+        if (FightTurn == 0) {
+            this.Player1Turn();
+            FightTurn = 1;
+        } else if (FightTurn == 1) {
+            this.Player2Turn();
+            FightTurn = 0;
+        }
+        this.CheckPlayersAreAlive();
     }
-    else if(FightTurn == 1)
-    {
-      this.Player2Turn();
-      FightTurn = 0;
-    }
-    this.CheckPlayersAreAlive();
-  }
 };
 
 Fight.prototype.Player1Turn = function() {
-  //CheckWeapon();
-  newlife = this.Attack(p2life, p2armor, p2avoid, p1attack);
-  p2life = newlife;
+    //CheckWeapon();
+    newlife = this.Attack(p2life, p2armor, p2avoid, p1attack, player1, player2);
+    p2life = newlife;
 };
 
 
 Fight.prototype.Player2Turn = function() {
-  //CheckWeapon();
-  newlife = this.Attack(p1life, p1armor, p1avoid, p2attack);
-  p1life = newlife;
+    //CheckWeapon();
+    newlife = this.Attack(p1life, p1armor, p1avoid, p2attack, player2, player1);
+    p1life = newlife;
 };
 
 Fight.prototype.CheckPlayersAreAlive = function() {
@@ -95,17 +87,16 @@ Fight.prototype.CheckPlayersAreAlive = function() {
 };
 
 
-Fight.prototype.Attack = function(life, armor, avoid, attack) {
-  if(life > 0)
-  {
-    damage = attack - armor;
-    var rand1 = this.rnd.integerInRange(0, 100);
-    if (avoid < rand1)
-    {
-      life = life - damage;
+Fight.prototype.Attack = function(life, armor, avoid, attack, from , to) {
+    if (life > 0) {
+        damage = attack - armor;
+        var rand1 = this.rnd.integerInRange(0, 100);
+        if (avoid < rand1) {
+            this.animattack(from, to);
+            life = life - damage;
+        }
     }
-  }
-  return life;
+    return life;
 };
 
 
@@ -115,29 +106,21 @@ Fight.prototype.Attack = function(life, armor, avoid, attack) {
 
 Fight.prototype.CheckPlayersInit = function() {
 
-  if(p1init > p2init)
-  {
-    FightTurn = 0;
+    if (p1init > p2init) {
+        FightTurn = 0;
 
-  }
-  else if (p1init  < p2init)
-  {
-    FightTurn = 1;
-  }
-  else if (p1init  ==  p2init)
-  {
-    var rand1 = this.rnd.integerInRange(0, 100);
-    var rand2 = this.rnd.integerInRange(0, 100);
-    if(rand1 < rand2)
-    {
-      FightTurn = 0;
+    } else if (p1init < p2init) {
+        FightTurn = 1;
+    } else if (p1init == p2init) {
+        var rand1 = this.rnd.integerInRange(0, 100);
+        var rand2 = this.rnd.integerInRange(0, 100);
+        if (rand1 < rand2) {
+            FightTurn = 0;
+        } else {
+            FightTurn = 1;
+        }
     }
-    else
-    {
-      FightTurn = 1;
-    }
-  }
-  return FightTurn;
+    return FightTurn;
 };
 
 
@@ -191,8 +174,29 @@ Fight.prototype.createP2 = function() {
     return 0;
 };
 
-Fight.prototype.animattackp1 = function() {
-
+Fight.prototype.animattack = function(from, to) {
+    if (from.children[1].x < to.children[1].x) {
+        side = 1;
+        initialPos = 0;
+        move = 690 - 90;
+    } else {
+        side = -1;
+        initialPos = 0;
+        move = -690 + 90;
+    }
+    tween1 = this.add.tween(from).to({
+        x: move
+    }, 300, Phaser.Easing.Linear.None);
+    tween2 = this.add.tween(from.children[3]).to({
+        x: from.children[3].world.x + 5 * side,
+        y: from.children[3].world.y + 5,
+    }, 200, Phaser.Easing.Linear.None, false, 0, 0, true);
+    tween3 = this.add.tween(from).to({
+        x: initialPos
+    }, 1000, Phaser.Easing.Linear.None);
+    tween1.chain(tween2);
+    tween2.chain(tween3);
+    tween1.start();
 };
 
 
