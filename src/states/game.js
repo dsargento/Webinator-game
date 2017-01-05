@@ -13,6 +13,7 @@ Game.prototype.create = function() {
     this.input.onDown.add(this.onInputDown, this);
     this.createP1();
     this.createP2();
+    this.animattackp1();
 };
 
 Game.prototype.update = function() {
@@ -68,7 +69,7 @@ Game.prototype.createP2 = function() {
 };
 
 Game.prototype.animattackp1 = function() {
-
+  this.add.tween(player1).to( { x: player2.x }, 4000, Phaser.Easing.Bounce.Out, true);
 };
 
 
