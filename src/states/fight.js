@@ -413,8 +413,6 @@ Fight.prototype.animAvoid = function(from, to) {
     tween2.onComplete.add(doSomething, this);
 
     function doSomething() {
-      console.log('animation completed');
-      animation = false;
         return(1);
     }
     tween1.start();
@@ -441,8 +439,6 @@ Fight.prototype.animBlock = function(from, to) {
     tween2.onComplete.add(doSomething, this);
 
     function doSomething() {
-      console.log('animation completed');
-      animation = false;
         return(1);
     }
     tween1.start();
@@ -485,8 +481,7 @@ Fight.prototype.animBlock = function(from, to) {
     tween1.onComplete.add(doSomething, this);
 
     function doSomething() {
-      console.log('animation completed');
-      animation = false;
+      return 1;
     }
     tween1.start();
 
