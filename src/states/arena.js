@@ -17,7 +17,7 @@ waiting.setText('WAITING FOR PLAYERS 2');
 if(player2 == true)
 {
 waiting.setText('READY');
-
+this.game.state.start('fight');
 }
 }
 
