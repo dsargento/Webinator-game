@@ -453,6 +453,18 @@ Fight.prototype.animDeath = function(from) {
   return 1;
 };
 
+Fight.prototype.animVictory = function(from) {
+  animVictory = this.add.tween(from.children[5]).to({
+    y: +435
+  }, 300, Phaser.Easing.Linear.None, true, 0, 0, true);
+  animVictory.repeat();
+  animVictory2 = this.add.tween(from.children[6]).to({
+    y: +435
+  }, 300, Phaser.Easing.Linear.None, true, 0, 0, true);
+  animVictory2.repeat();
+  return 1;
+};
+
 Fight.prototype.animBlock = function(from, to) {
     if (from.children[1].x < to.children[1].x) {
         side = 1;
