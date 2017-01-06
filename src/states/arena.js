@@ -4,8 +4,8 @@ Arena.prototype.create = function() {
     console.log('Arena');
     waiting = this.add.bitmapText(300, 200, 'carrier_command', 'WAITING FOR PLAYERS 1', 10);
     this.input.onDown.add(this.onInputDown, this);
-    player1 = false;
-    player2 = false;
+    player1 = true;
+    player2 = true;
 
   //  this.game.state.start('fight');
 };
@@ -26,6 +26,7 @@ if(player1 == true)
   if(player2 == true)
   {
   waiting.setText('READY');
+  this.game.state.start('fight');
   }
 }
 

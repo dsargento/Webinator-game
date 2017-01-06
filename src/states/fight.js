@@ -322,7 +322,12 @@ Fight.prototype.Attack = function(life, armor, avoid, attack, block, target, fro
             }
         }
         else {
+
+            if (animationDamage =  this.animDamage(target) == 1)
+            {
+              console.log('DAMAGE COMPLETED');
               life = life - damage;
+            }
         }
     }
     return life;
@@ -517,7 +522,6 @@ Fight.prototype.animDamage = function(from) {
     alpha: 0
   }, 100, Phaser.Easing.Linear.None, true, 0, 0, true);
   damageTween.start();
-  tween.repeat(3, 0);
   return 1;
 };
 
