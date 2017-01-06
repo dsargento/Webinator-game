@@ -9,6 +9,7 @@ Arena.prototype.create = function() {
     });
     text.anchor.set(0.5);
     this.input.onDown.add(this.onInputDown, this);
+
     this.game.state.start('fight');
 };
 
@@ -18,7 +19,7 @@ Arena.prototype.update = function() {
 };
 
 Arena.prototype.onInputDown = function() {
-    this.game.state.start('fight');
+    //this.game.state.start('fight');
 };
 
 module.exports = Arena;
