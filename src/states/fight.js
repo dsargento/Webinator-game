@@ -212,6 +212,7 @@ Fight.prototype.CheckPlayersAreAlive = function() {
     {
         console.log('player 1 Death');
         gameOver = this.add.bitmapText(200, 200, 'carrier_command', p2name + ' WINS !!! ', 34);
+        this.animVictory(player2);
     }
   }
   if(p2life <= 0) {
@@ -221,6 +222,7 @@ Fight.prototype.CheckPlayersAreAlive = function() {
     {
       console.log('player 2 Death');
       gameOver = this.add.bitmapText(200, 200, 'carrier_command', p1name + ' WINS !!! ', 34);
+      this.animVictory(player1);
     }
   }
   p1_hp.setText('HP: ' + p1life);
@@ -245,7 +247,6 @@ Fight.prototype.Attack = function(life, armor, avoid, attack, block, target, fro
                 console.log('AVOID COMPLETED');
               }
         }
-
         else if (block > rand1)
         {
             console.log('BLOCK');
