@@ -33,7 +33,7 @@ Fight.prototype.create = function() {
     player2 = this.add.group();
     xpos = this.world.centerX;
     ypos = this.world.centerY;
-    this.input.onDown.add(this.onInputDown, this);
+    // this.input.onDown.add(this.onInputDown, this);
 
     this.GenerateStuff();
     this.createP1();
@@ -498,6 +498,21 @@ Fight.prototype.animDeath = function(from) {
   deathTween.start();
   return 1;
 };
+
+/*
+--------------------------------------------------------------------------------
+Animation de dégats
+--------------------------------------------------------------------------------
+*/
+Fight.prototype.animDamage = function(from) {
+  damageTween = this.add.tween(from).to({
+    alpha: 0
+  }, 100, Phaser.Easing.Linear.None, true, 0, 0, true);
+  damageTween.start();
+  tween.repeat(3, 0);
+  return 1;
+};
+
 /*
 --------------------------------------------------------------------------------
 Animation de victoire
@@ -512,8 +527,36 @@ Fight.prototype.animVictory = function(from) {
     y: +435
   }, 300, Phaser.Easing.Linear.None, true, 0, 0, true);
   animVictory2.repeat();
+  replay = this.add.bitmapText(this.game.width * 0.5, 290, 'carrier_command', 'Replay', 32);
+  replay.anchor.set(0.5);
+  replay.inputEnabled = true;
+  replay.events.onInputDown.add(this.replay, this);
+  menu = this.add.bitmapText(this.game.width * 0.5, 350, 'carrier_command', 'Menu', 32);
+  menu.anchor.set(0.5);
+  menu.inputEnabled = true;
+  menu.events.onInputDown.add(this.returnMenu, this);
+
   return 1;
 };
+
+/*
+--------------------------------------------------------------------------------
+Rejouer
+--------------------------------------------------------------------------------
+*/
+Fight.prototype.replay = function() {
+  this.game.state.start('fight');
+};
+
+/*
+--------------------------------------------------------------------------------
+Revenir au menu
+--------------------------------------------------------------------------------
+*/
+Fight.prototype.returnMenu = function() {
+  this.game.state.start('menu');
+};
+
 /*
 --------------------------------------------------------------------------------
 Animation de blockage
@@ -534,7 +577,7 @@ Fight.prototype.animBlock = function(from, to) {
         y: from.children[6].world.y - 5,
     }, 200, Phaser.Easing.Linear.None, false, 0, 0, true);
     tween1.onComplete.add(doSomething, this);
-    
+
     function doSomething() {
       return 1;
     }
