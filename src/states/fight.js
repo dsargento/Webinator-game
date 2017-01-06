@@ -211,7 +211,7 @@ Fight.prototype.CheckPlayersAreAlive = function() {
     if (animationDeath = this.animDeath(player1) == 1)
     {
         console.log('player 1 Death');
-        gameOver = this.add.bitmapText(300, 300, 'carrier_command', 'GameOver ', 34);
+        gameOver = this.add.bitmapText(200, 200, 'carrier_command', p2name + ' WINS !!! ', 34);
     }
   }
   if(p2life <= 0) {
@@ -220,7 +220,7 @@ Fight.prototype.CheckPlayersAreAlive = function() {
     if (animationDeath = this.animDeath(player2) == 1)
     {
       console.log('player 2 Death');
-      gameOver = this.add.bitmapText(300, 300, 'carrier_command', 'GameOver ', 34);
+      gameOver = this.add.bitmapText(200, 200, 'carrier_command', p1name + ' WINS !!! ', 34);
     }
   }
   p1_hp.setText('HP: ' + p1life);
@@ -450,6 +450,7 @@ Fight.prototype.animDeath = function(from) {
     alpha: 0
   }, 300, Phaser.Easing.Linear.None);
   deathTween.start();
+  return 1;
 };
 
 Fight.prototype.animBlock = function(from, to) {
