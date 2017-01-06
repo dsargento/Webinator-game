@@ -188,8 +188,8 @@ Fight.prototype.GenerateWeapon = function(attack, player) {
 
 Fight.prototype.Player1Turn = function() {
     animation = true;
-    animationAttack = this.animattack(player1, player2);
-    newlife = this.Attack(p2life, p2armor, p2avoid, p1attack, p2block);
+    animationAttack = this.animAttack(player1, player2);
+    newlife = this.Attack(p2life, p2armor, p2avoid, p1attack, p2block, player2, player1);
     p2life = newlife;
     return 0;
 };
@@ -197,8 +197,8 @@ Fight.prototype.Player1Turn = function() {
 
 Fight.prototype.Player2Turn = function() {
     animation = true;
-    animationAttack = this.animattack(player2, player1);
-    newlife2 = this.Attack(p1life, p1armor, p1avoid, p2attack, p1block);
+    animationAttack = this.animAttack(player2, player1);
+    newlife2 = this.Attack(p1life, p1armor, p1avoid, p2attack, p1block, player1, player2);
     p1life = newlife2;
     return 0;
 };
@@ -208,10 +208,20 @@ Fight.prototype.CheckPlayersAreAlive = function() {
   {
     player1Alive = false;
     p1life = 0;
+    if (animationDeath = this.animDeath(player1) == 1)
+    {
+        console.log('player 1 Death');
+        gameOver = this.add.bitmapText(300, 300, 'carrier_command', 'GameOver ', 34);
+    }
   }
-  else   if(p2life <= 0) {
+  if(p2life <= 0) {
     player2Alive = false;
     p2life = 0;
+    if (animationDeath = this.animDeath(player2) == 1)
+    {
+      console.log('player 2 Death');
+      gameOver = this.add.bitmapText(300, 300, 'carrier_command', 'GameOver ', 34);
+    }
   }
   p1_hp.setText('HP: ' + p1life);
   p2_hp.setText('HP: ' + p2life);
@@ -219,7 +229,7 @@ Fight.prototype.CheckPlayersAreAlive = function() {
 };
 
 
-Fight.prototype.Attack = function(life, armor, avoid, attack, block) {
+Fight.prototype.Attack = function(life, armor, avoid, attack, block, target, from) {
     if (life > 0) {
         damage = attack - armor;
         if(damage <= 0)
@@ -230,10 +240,19 @@ Fight.prototype.Attack = function(life, armor, avoid, attack, block) {
         if (avoid > rand1)
         {
               console.log('AVOID');
+              if (animationAvoid = this.animAvoid(target, from) == 1)
+              {
+                console.log('AVOID COMPLETED');
+              }
         }
+
         else if (block > rand1)
         {
             console.log('BLOCK');
+            if (animationAvoid = this.animBlock(target, from) == 1)
+            {
+            console.log('BLOCK COMPLETED');
+            }
         }
         else {
           {
@@ -337,7 +356,7 @@ Fight.prototype.createP2 = function() {
     return 0;
 };
 
-Fight.prototype.animattack = function(from, to) {
+Fight.prototype.animAttack = function(from, to) {
     if (from.children[1].x < to.children[1].x) {
         side = 1;
         initialPos = 0;
@@ -369,15 +388,15 @@ Fight.prototype.animattack = function(from, to) {
 
 };
 
-Fight.prototype.animesquive = function(from, to) {
+Fight.prototype.animAvoid = function(from, to) {
     if (from.children[1].x < to.children[1].x) {
         side = 1;
         initialPos = 0;
-        move = 50;
+        move = -50;
     } else {
         side = -1;
         initialPos = 0;
-        move = -50;
+        move = 50;
     }
     tween1 = this.add.tween(from).to({
         x: move
@@ -394,6 +413,37 @@ Fight.prototype.animesquive = function(from, to) {
     tween1.start();
 
 };
+
+Fight.prototype.animBlock = function(from, to) {
+    if (from.children[1].x < to.children[1].x) {
+        side = 1;
+        initialPos = 0;
+        move = -50;
+    } else {
+        side = -1;
+        initialPos = 0;
+        move = 50;
+    }
+    tween1 = this.add.tween(from).to({
+        x: move
+    }, 300, Phaser.Easing.Linear.None);
+    tween2 = this.add.tween(from).to({
+        x: initialPos
+    }, 1000, Phaser.Easing.Linear.None);
+    tween1.chain(tween2);
+    tween2.onComplete.add(doSomething, this);
+
+    function doSomething() {
+        return(1);
+    }
+    tween1.start();
+
+};
+Fight.prototype.animDeath = function() {
+    return 1;
+
+};
+
 
 
 module.exports = Fight;
