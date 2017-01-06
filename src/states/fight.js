@@ -1,5 +1,11 @@
 function Fight() {}
-
+/*
+--------------------------------------------------------------------------------
+Creation de la scene
+declaration des variables des joueurs
+declaration des variables interfaces
+--------------------------------------------------------------------------------
+*/
 Fight.prototype.create = function() {
      player1Alive = true;
      p1attack = 5; p1attackId = 0;
@@ -46,7 +52,11 @@ Fight.prototype.create = function() {
     animation = false;
     this.CheckPlayersInit();
 };
-
+/*
+--------------------------------------------------------------------------------
+Boucle de Jeu
+--------------------------------------------------------------------------------
+*/
 Fight.prototype.update = function() {
   if ((player1Alive == true) && (player2Alive == true)) {
     if(animation == false)
@@ -67,8 +77,11 @@ Fight.prototype.update = function() {
       p2_hp.setText('HP: ' + p2life);
     }
 };
-
-
+/*
+--------------------------------------------------------------------------------
+Generation du Stuff d'un joueur
+--------------------------------------------------------------------------------
+*/
 Fight.prototype.GenerateStuff = function() {
   Armor = this.GenerateArmor(p1armor, 1);
   p1armor = Armor;
@@ -93,7 +106,11 @@ Fight.prototype.GenerateStuff = function() {
   p2block = Block;
   return 1;
 };
-
+/*
+--------------------------------------------------------------------------------
+Generation de la statistique Initiative
+--------------------------------------------------------------------------------
+*/
 Fight.prototype.GenerateInit = function(init, player) {
   var Helmets = [];
   Helmets[0] = 31;
@@ -112,6 +129,11 @@ Fight.prototype.GenerateInit = function(init, player) {
   }
   return init;
 };
+/*
+--------------------------------------------------------------------------------
+Generation de la statistique Block
+--------------------------------------------------------------------------------
+*/
 Fight.prototype.GenerateBlock = function(block, player) {
   var Shields = [];
   Shields[0] = 36;
@@ -130,6 +152,11 @@ Fight.prototype.GenerateBlock = function(block, player) {
   }
   return block;
 };
+/*
+--------------------------------------------------------------------------------
+Generation de la statistique Avoid
+--------------------------------------------------------------------------------
+*/
 Fight.prototype.GenerateAvoid = function(avoid, player) {
   var Pants = [];
   Pants[0] = 3;
@@ -149,6 +176,11 @@ Fight.prototype.GenerateAvoid = function(avoid, player) {
 
   return avoid;
 };
+/*
+--------------------------------------------------------------------------------
+Generation de la statistique Armor
+--------------------------------------------------------------------------------
+*/
 Fight.prototype.GenerateArmor = function(armor, player) {
   var Armors = [];
   Armors[0] = 9;
@@ -168,6 +200,11 @@ Fight.prototype.GenerateArmor = function(armor, player) {
 
   return armor;
 };
+/*
+--------------------------------------------------------------------------------
+Generation de la statistique Weapons / Attack
+--------------------------------------------------------------------------------
+*/
 Fight.prototype.GenerateWeapon = function(attack, player) {
   var Weapons = [];
   Weapons[0] = 368;
@@ -187,7 +224,11 @@ Fight.prototype.GenerateWeapon = function(attack, player) {
   }
   return attack;
 };
-
+/*
+--------------------------------------------------------------------------------
+Tour du joueur 1
+--------------------------------------------------------------------------------
+*/
 Fight.prototype.Player1Turn = function() {
     animation = true;
     animationAttack = this.animAttack(player1, player2);
@@ -196,7 +237,11 @@ Fight.prototype.Player1Turn = function() {
     return 0;
 };
 
-
+/*
+--------------------------------------------------------------------------------
+Tour du joueur 2
+--------------------------------------------------------------------------------
+*/
 Fight.prototype.Player2Turn = function() {
     animation = true;
     animationAttack = this.animAttack(player2, player1);
@@ -204,7 +249,11 @@ Fight.prototype.Player2Turn = function() {
     p1life = newlife2;
     return 0;
 };
-
+/*
+--------------------------------------------------------------------------------
+Verification de la vie des joueurs et de leurs existence
+--------------------------------------------------------------------------------
+*/
 Fight.prototype.CheckPlayersAreAlive = function() {
   if(p1life <= 0)
   {
@@ -230,7 +279,14 @@ Fight.prototype.CheckPlayersAreAlive = function() {
   return 0;
 };
 
-
+/*
+--------------------------------------------------------------------------------
+Fonction d'attack
+Gestion d'esquive
+Gestion de blockage
+Gestion de l'armure
+--------------------------------------------------------------------------------
+*/
 Fight.prototype.Attack = function(life, armor, avoid, attack, block, target, from) {
     if (life > 0) {
         damage = attack - armor;
@@ -248,7 +304,6 @@ Fight.prototype.Attack = function(life, armor, avoid, attack, block, target, fro
                 console.log('AVOID COMPLETED');
               }
         }
-
         else if (block > rand1)
         {
             console.log('BLOCK');
@@ -257,17 +312,19 @@ Fight.prototype.Attack = function(life, armor, avoid, attack, block, target, fro
             {
               console.log('BLOCK COMPLETED');
             }
-
         }
         else {
-          {
               life = life - damage;
-          }
         }
     }
     return life;
 };
-
+/*
+--------------------------------------------------------------------------------
+Verification de la variable statistique Initiative
+Definis quel joueurs commencent
+--------------------------------------------------------------------------------
+*/
 Fight.prototype.CheckPlayersInit = function() {
 
     if (p1init > p2init) {
@@ -286,12 +343,11 @@ Fight.prototype.CheckPlayersInit = function() {
     }
     return 0;
 };
-
-
-Fight.prototype.onInputDown = function() {
-
-};
-
+/*
+--------------------------------------------------------------------------------
+Creation du Joueur 1
+--------------------------------------------------------------------------------
+*/
 Fight.prototype.createP1 = function() {
     p1x = 20;
     p1y = 600 - 150;
@@ -326,7 +382,11 @@ Fight.prototype.createP1 = function() {
     player1.add(p1shield);
     return 0;
 };
-
+/*
+--------------------------------------------------------------------------------
+Creation du Joueur 2
+--------------------------------------------------------------------------------
+*/
 Fight.prototype.createP2 = function() {
     p2x = 800 - 20;
     p2y = 600 - 150;
@@ -360,7 +420,11 @@ Fight.prototype.createP2 = function() {
     player2.add(p2shield);
     return 0;
 };
-
+/*
+--------------------------------------------------------------------------------
+Animation d'attaque
+--------------------------------------------------------------------------------
+*/
 Fight.prototype.animAttack = function(from, to) {
     if (from.children[1].x < to.children[1].x) {
         side = 1;
@@ -392,7 +456,11 @@ Fight.prototype.animAttack = function(from, to) {
     tween1.start();
 
 };
-
+/*
+--------------------------------------------------------------------------------
+Animation d'esquive
+--------------------------------------------------------------------------------
+*/
 Fight.prototype.animAvoid = function(from, to) {
     if (from.children[1].x < to.children[1].x) {
         side = 1;
@@ -418,32 +486,11 @@ Fight.prototype.animAvoid = function(from, to) {
     tween1.start();
 
 };
-
-Fight.prototype.animBlock = function(from, to) {
-    if (from.children[1].x < to.children[1].x) {
-        side = 1;
-        initialPos = 0;
-        move = -50;
-    } else {
-        side = -1;
-        initialPos = 0;
-        move = 50;
-    }
-    tween1 = this.add.tween(from).to({
-        x: move
-    }, 300, Phaser.Easing.Linear.None);
-    tween2 = this.add.tween(from).to({
-        x: initialPos
-    }, 1000, Phaser.Easing.Linear.None);
-    tween1.chain(tween2);
-    tween2.onComplete.add(doSomething, this);
-
-    function doSomething() {
-        return(1);
-    }
-    tween1.start();
-};
-
+/*
+--------------------------------------------------------------------------------
+Animation de mort
+--------------------------------------------------------------------------------
+*/
 Fight.prototype.animDeath = function(from) {
   deathTween = this.add.tween(from).to({
     alpha: 0
@@ -451,7 +498,11 @@ Fight.prototype.animDeath = function(from) {
   deathTween.start();
   return 1;
 };
-
+/*
+--------------------------------------------------------------------------------
+Animation de victoire
+--------------------------------------------------------------------------------
+*/
 Fight.prototype.animVictory = function(from) {
   animVictory = this.add.tween(from.children[5]).to({
     y: +435
@@ -463,7 +514,11 @@ Fight.prototype.animVictory = function(from) {
   animVictory2.repeat();
   return 1;
 };
-
+/*
+--------------------------------------------------------------------------------
+Animation de blockage
+--------------------------------------------------------------------------------
+*/
 Fight.prototype.animBlock = function(from, to) {
     if (from.children[1].x < to.children[1].x) {
         side = 1;
@@ -479,12 +534,10 @@ Fight.prototype.animBlock = function(from, to) {
         y: from.children[6].world.y - 5,
     }, 200, Phaser.Easing.Linear.None, false, 0, 0, true);
     tween1.onComplete.add(doSomething, this);
-
+    
     function doSomething() {
       return 1;
     }
     tween1.start();
-
 };
-
 module.exports = Fight;
