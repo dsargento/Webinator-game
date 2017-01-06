@@ -63,6 +63,8 @@ Fight.prototype.update = function() {
           }
       this.CheckPlayersAreAlive();
       }
+      p1_hp.setText('HP: ' + p1life);
+      p2_hp.setText('HP: ' + p2life);
     }
 };
 
@@ -225,8 +227,6 @@ Fight.prototype.CheckPlayersAreAlive = function() {
       this.animVictory(player1);
     }
   }
-  p1_hp.setText('HP: ' + p1life);
-  p2_hp.setText('HP: ' + p2life);
   return 0;
 };
 
@@ -238,6 +238,7 @@ Fight.prototype.Attack = function(life, armor, avoid, attack, block, target, fro
         {
           damage = 1;
         }
+
         var rand1 = this.rnd.integerInRange(0, 100);
         if (avoid > rand1)
         {
@@ -247,13 +248,16 @@ Fight.prototype.Attack = function(life, armor, avoid, attack, block, target, fro
                 console.log('AVOID COMPLETED');
               }
         }
+
         else if (block > rand1)
         {
             console.log('BLOCK');
-            if (animationAvoid = this.animBlock(target, from) == 1)
+
+            if (animationBlock = this.animBlock(target, from) == 1)
             {
-            console.log('BLOCK COMPLETED');
+              console.log('BLOCK COMPLETED');
             }
+
         }
         else {
           {
@@ -409,6 +413,8 @@ Fight.prototype.animAvoid = function(from, to) {
     tween2.onComplete.add(doSomething, this);
 
     function doSomething() {
+      console.log('animation completed');
+      animation = false;
         return(1);
     }
     tween1.start();
@@ -435,16 +441,12 @@ Fight.prototype.animBlock = function(from, to) {
     tween2.onComplete.add(doSomething, this);
 
     function doSomething() {
+      console.log('animation completed');
+      animation = false;
         return(1);
     }
     tween1.start();
-
 };
-Fight.prototype.animDeath = function() {
-    return 1;
-
-};
-
 
 Fight.prototype.animDeath = function(from) {
   deathTween = this.add.tween(from).to({
