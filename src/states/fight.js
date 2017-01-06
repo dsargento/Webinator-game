@@ -296,7 +296,7 @@ Fight.prototype.createP1 = function() {
     p1hair = this.add.sprite(p1x, p1y, 'spritesheet');
     p1helmet = this.add.sprite(p1x, p1y, 'spritesheet');
     p1protection = this.add.sprite(p1x, p1y, 'spritesheet');
-    p1schield = this.add.sprite(p1x, p1y, 'spritesheet');
+    p1shield = this.add.sprite(p1x, p1y, 'spritesheet');
     p1body.frame = 1;
     p1body.scale.setTo(6);
     p1weapon.frame = p1attackId;
@@ -309,8 +309,8 @@ Fight.prototype.createP1 = function() {
     p1helmet.scale.setTo(6);
     p1protection.frame = p1armorId;
     p1protection.scale.setTo(6);
-    p1schield.frame = p1blockId;
-    p1schield.scale.setTo(6);
+    p1shield.frame = p1blockId;
+    p1shield.scale.setTo(6);
 
     player1.add(p1body);
     player1.add(p1pants);
@@ -318,7 +318,7 @@ Fight.prototype.createP1 = function() {
     player1.add(p1helmet);
     player1.add(p1protection);
     player1.add(p1weapon);
-    player1.add(p1schield);
+    player1.add(p1shield);
     return 0;
 };
 
@@ -331,7 +331,7 @@ Fight.prototype.createP2 = function() {
     p2hair = this.add.sprite(p2x, p2y, 'spritesheet');
     p2helmet = this.add.sprite(p2x, p2y, 'spritesheet');
     p2protection = this.add.sprite(p2x, p2y, 'spritesheet');
-    p2schield = this.add.sprite(p2x, p2y, 'spritesheet');
+    p2shield = this.add.sprite(p2x, p2y, 'spritesheet');
     p2body.frame = 1;
     p2body.scale.setTo(-6, 6);
     p2weapon.frame = p2attackId;
@@ -344,15 +344,15 @@ Fight.prototype.createP2 = function() {
     p2helmet.scale.setTo(-6, 6);
     p2protection.frame = p2armorId;
     p2protection.scale.setTo(-6, 6);
-    p2schield.frame = p2blockId;
-    p2schield.scale.setTo(-6, 6);
+    p2shield.frame = p2blockId;
+    p2shield.scale.setTo(-6, 6);
     player2.add(p2body);
     player2.add(p2pants);
     player2.add(p2hair);
     player2.add(p2helmet);
     player2.add(p2protection);
     player2.add(p2weapon);
-    player2.add(p2schield);
+    player2.add(p2shield);
     return 0;
 };
 
@@ -445,5 +445,35 @@ Fight.prototype.animDeath = function() {
 };
 
 
+Fight.prototype.animDeath = function(from) {
+  deathTween = this.add.tween(from).to({
+    alpha: 0
+  }, 300, Phaser.Easing.Linear.None);
+  deathTween.start();
+};
+
+Fight.prototype.animBlock = function(from, to) {
+    if (from.children[1].x < to.children[1].x) {
+        side = 1;
+        initialPos = 0;
+        move = 690 - 90;
+    } else {
+        side = -1;
+        initialPos = 0;
+        move = -690 + 90;
+    }
+    tween1 = this.add.tween(from.children[6]).to({
+        x: from.children[6].world.x + 5 * side,
+        y: from.children[6].world.y - 5,
+    }, 200, Phaser.Easing.Linear.None, false, 0, 0, true);
+    tween1.onComplete.add(doSomething, this);
+
+    function doSomething() {
+      console.log('animation completed');
+      animation = false;
+    }
+    tween1.start();
+
+};
 
 module.exports = Fight;
