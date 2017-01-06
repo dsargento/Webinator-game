@@ -192,5 +192,31 @@ Fight.prototype.animattack = function(from, to) {
 
 };
 
+Fight.prototype.animesquive = function(from, to) {
+    if (from.children[1].x < to.children[1].x) {
+        side = 1;
+        initialPos = 0;
+        move = 50;
+    } else {
+        side = -1;
+        initialPos = 0;
+        move = -50;
+    }
+    tween1 = this.add.tween(from).to({
+        x: move
+    }, 300, Phaser.Easing.Linear.None);
+    tween2 = this.add.tween(from).to({
+        x: initialPos
+    }, 1000, Phaser.Easing.Linear.None);
+    tween1.chain(tween2);
+    tween2.onComplete.add(doSomething, this);
+
+    function doSomething() {
+        return(1);
+    }
+    tween1.start();
+
+};
+
 
 module.exports = Fight;
