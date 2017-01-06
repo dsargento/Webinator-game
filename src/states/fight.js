@@ -100,7 +100,7 @@ Fight.prototype.GenerateInit = function(init, player) {
   Helmets[3] = 193;
   Helmets[4] = 247;
   var randHelmets = this.rnd.integerInRange(0, 4);
-  init = randHelmets + 4;
+  init = randHelmets + 8;
   if (player == 1)
   {
       p1initId = Helmets[randHelmets];
@@ -118,7 +118,7 @@ Fight.prototype.GenerateBlock = function(block, player) {
   Shields[3] = 39;
   Shields[4] = 40;
   var randShields = this.rnd.integerInRange(0, 4);
-  block = randShields + 4;
+  block = randShields + 8;
   if (player == 1)
   {
       p1blockId = Shields[randShields];
@@ -136,7 +136,7 @@ Fight.prototype.GenerateAvoid = function(avoid, player) {
   Pants[3] = 165;
   Pants[4] = 219;
   var randPants = this.rnd.integerInRange(0, 4);
-  avoid = randPants + 4;
+  avoid = randPants + 8;
   if (player == 1)
   {
       p1avoidId = Pants[randPants];
@@ -175,7 +175,7 @@ Fight.prototype.GenerateWeapon = function(attack, player) {
   Weapons[4] = 47;
 
   var randWeapons = this.rnd.integerInRange(0, 4);
-  attack = randWeapons + 4;
+  attack = randWeapons + 16;
   if (player == 1)
   {
       p1attackId = Weapons[randWeapons];
@@ -191,7 +191,6 @@ Fight.prototype.Player1Turn = function() {
     animationAttack = this.animattack(player1, player2);
     newlife = this.Attack(p2life, p2armor, p2avoid, p1attack, p2block);
     p2life = newlife;
-    console.log(p2life);
     return 0;
 };
 
@@ -201,7 +200,6 @@ Fight.prototype.Player2Turn = function() {
     animationAttack = this.animattack(player2, player1);
     newlife2 = this.Attack(p1life, p1armor, p1avoid, p2attack, p1block);
     p1life = newlife2;
-    console.log(p1life);
     return 0;
 };
 
@@ -223,7 +221,7 @@ Fight.prototype.CheckPlayersAreAlive = function() {
 
 Fight.prototype.Attack = function(life, armor, avoid, attack, block) {
     if (life > 0) {
-        damage = attack % armor;
+        damage = attack - armor;
         if(damage <= 0)
         {
           damage = 1;
@@ -239,8 +237,6 @@ Fight.prototype.Attack = function(life, armor, avoid, attack, block) {
         }
         else {
           {
-            console.log('DAMAGE');
-
               life = life - damage;
           }
         }
