@@ -2,19 +2,24 @@ function Arena() {}
 
 Arena.prototype.create = function() {
     console.log('Arena');
-    var text = this.add.text(this.game.width * 0.5, this.game.height * 0.5, 'ARENA', {
-        font: '42px Arial',
-        fill: '#ffffff',
-        align: 'center'
-    });
-    text.anchor.set(0.5);
+    waiting = this.add.bitmapText(300, 200, 'carrier_command', 'WAITING FOR PLAYERS 1', 10);
     this.input.onDown.add(this.onInputDown, this);
+    player1 = false;
+    player2 = false;
 
-    this.game.state.start('fight');
+  //  this.game.state.start('fight');
 };
 
 Arena.prototype.update = function() {
+if(player1 == true)
+{
+waiting.setText('WAITING FOR PLAYERS 2');
+if(player2 == true)
+{
+waiting.setText('READY');
 
+}
+}
 
 };
 
