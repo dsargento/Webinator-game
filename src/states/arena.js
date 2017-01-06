@@ -11,14 +11,22 @@ Arena.prototype.create = function() {
 };
 
 Arena.prototype.update = function() {
+/*if ( player1 conneted )
+{
+  player1 = true;
+}
+if ( player2 conneted )
+{
+  player2 = true;
+}
+*/
 if(player1 == true)
 {
-waiting.setText('WAITING FOR PLAYERS 2');
-if(player2 == true)
-{
-waiting.setText('READY');
-
-}
+  waiting.setText('WAITING FOR PLAYERS 2');
+  if(player2 == true)
+  {
+  waiting.setText('READY');
+  }
 }
 
 };
