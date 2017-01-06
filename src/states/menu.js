@@ -1,15 +1,17 @@
 function Menu() {}
 
 Menu.prototype.create = function() {
-      console.log('Menu');
-    var text = this.add.text(this.game.width * 0.5, this.game.height * 0.5, 'MENU', {
-        font: '42px Arial',
-        fill: '#ffffff',
-        align: 'center'
-    });
-    text.anchor.set(0.5);
-    this.input.onDown.add(this.onInputDown, this);
-    this.game.state.start('game');
+    console.log('Menu');
+    menuBackground = this.add.image(this.game.width * 0.5, this.game.height * 0.5, "menuBackground");
+    menuBackground.height = 600;
+    menuBackground.anchor.set(0.5);
+    title = this.add.bitmapText(this.game.width * 0.5, 200, 'carrier_command', 'My Rouis', 24);
+    title.anchor.set(0.5);
+    play = this.add.bitmapText(this.game.width * 0.5, 290, 'carrier_command', 'Play', 32);
+    play.anchor.set(0.5);
+    play.inputEnabled = true;
+    play.events.onInputDown.add(this.onInputDown, this);
+    // this.game.state.start('game');
 };
 
 Menu.prototype.update = function() {
