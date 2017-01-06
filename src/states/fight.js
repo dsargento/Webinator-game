@@ -79,6 +79,14 @@ Fight.prototype.update = function() {
 };
 /*
 --------------------------------------------------------------------------------
+SI un bouton est appuyé .....
+--------------------------------------------------------------------------------
+*/
+Fight.prototype.onInputDown = function() {
+};
+
+/*
+--------------------------------------------------------------------------------
 Generation du Stuff d'un joueur
 --------------------------------------------------------------------------------
 */
@@ -458,7 +466,7 @@ Fight.prototype.animAttack = function(from, to) {
 };
 /*
 --------------------------------------------------------------------------------
-Animation d'esquive
+Animation d'attaque
 --------------------------------------------------------------------------------
 */
 Fight.prototype.animAvoid = function(from, to) {
@@ -534,10 +542,12 @@ Fight.prototype.animBlock = function(from, to) {
         y: from.children[6].world.y - 5,
     }, 200, Phaser.Easing.Linear.None, false, 0, 0, true);
     tween1.onComplete.add(doSomething, this);
-    
+
     function doSomething() {
       return 1;
     }
     tween1.start();
+
 };
+
 module.exports = Fight;
